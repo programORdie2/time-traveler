@@ -12,7 +12,7 @@ const pinata = new PinataSDK({
 });
 
 export async function uploadFiles(files: File[]) {
-  const data: { name: string, type: string, cid: string }[] = [];
+  const data: { name: string, type: string, cid: string, id: string }[] = [];
 
   await Promise.all(
     files.map(async (file) => {
@@ -21,10 +21,36 @@ export async function uploadFiles(files: File[]) {
       data.push({
         name: file.name,
         type: file.type,
-        cid: result.cid
+        cid: result.cid,
+        id: result.id
       });
     })
   )
 
   return data
+}
+
+export async function deleteFiles(ids: string[]) {
+  await pinata.files.delete(ids);
+}
+
+export async function getFiles(cids: string[]) {
+  const urls: { [key: string]: string } = {};
+
+  await Promise.all(
+    cids.map(async (cid) => {
+      const result = await pinata.gateways.createSignedURL({
+        cid,
+        expires: 60
+      }).optimizeImage({
+        width: 400,
+        height: 400,
+        format: "webp"
+      })
+
+      urls[cid] = result
+    })
+  )
+
+  return urls
 }

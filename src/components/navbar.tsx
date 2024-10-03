@@ -16,11 +16,9 @@ export default async function Navbar({ user }: { user: any }) {
                     <NavigationMenuLink href="/">Home</NavigationMenuLink>
                 </NavigationMenuItem>
 
-                <NavigationMenuItem>
+                <NavigationMenuItem className="flex gap-3 justify-center items-center">
                     <ThemeSwitch />
-                </NavigationMenuItem>
 
-                <NavigationMenuItem>
                     {user?.user ? (
                         <Logout />
                     ) : (

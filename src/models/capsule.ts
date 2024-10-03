@@ -1,6 +1,29 @@
 import mongoose from "mongoose";
 
+const fileSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    type: {
+        type: String,
+        required: true
+    },
+    cid: {
+        type: String,
+        required: true
+    },
+    id: {
+        type: String,
+        required: true
+    }
+})
+
 const capsuleSchema = new mongoose.Schema({
+    id: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true
@@ -13,14 +36,7 @@ const capsuleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    files: {
-        type: [{
-            name: String,
-            type: String,
-            cid: String
-        }],
-        required: true
-    },
+    files: [fileSchema],
     unlockDate: {
         type: Date,
         required: true

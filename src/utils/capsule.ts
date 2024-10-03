@@ -1,20 +1,37 @@
-import capsule from "@/models/capsule";
+import Capsule from "@/models/capsule";
+import { deleteFiles } from "./upload";
 
 export const getAllCapsules = async (ownerEmail: string) => {
-    return await capsule.find({ ownerEmail });
+    return await Capsule.find({ ownerEmail });
 }
 
-export const createCapsule = async (ownerEmail: string, name: string, description: string, uploadedFiles: { name: string, type: string, cid: string }[], unlockDate: Date) => {
-    // Make sure that the unlock date is in the future
-    if (unlockDate.getTime() < Date.now()) {
-        throw new Error("Unlock date must be in the future");
-    }
+export const getCapsule = async (id: string, ownerEmail: string) => {
+    return await Capsule.findOne({ id, ownerEmail });
+}
 
-    return await capsule.create({
+export const createCapsule = async (ownerEmail: string, name: string, description: string, uploadedFiles: { name: string, type: string, cid: string, id: string }[], unlockDate: Date) => {
+    const id = Date.now().toString();
+
+    const data = {
+        id,
         name,
         description,
         ownerEmail,
         files: uploadedFiles,
         unlockDate
-    });
+    }
+
+    return await Capsule.create(data);
+}
+
+export const deleteCapsule = async (id: string, ownerEmail: string) => {
+    const capsule = await Capsule.findOne({ id, ownerEmail });
+    if (!capsule) {
+        throw new Error("Capsule not found");
+    }
+
+    const pinataIds = capsule.files.map((file: { id: string }) => file.id);
+    deleteFiles(pinataIds);
+
+    capsule.delete();
 }
