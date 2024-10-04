@@ -1,10 +1,12 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 
-import { getCapsule } from "@/utils/capsule";
+import { getCapsule } from "@/lib/capsule";
 import { getFiles } from "@/utils/upload";
-import { FilePreview } from "@/components/file-preview";
+import { FilePreview } from "@/components/file-card";
+import { DeleteButton } from "@/components/delete-button";
 import Link from "next/link";
+import { ClockIcon } from "@radix-ui/react-icons";
 
 export default async function CapsulePage({ params }: { params: { id: string } }) {
     const user = await auth();
@@ -28,8 +30,9 @@ export default async function CapsulePage({ params }: { params: { id: string } }
 
     return (
         <div className="w-full h-full">
-            <div className="mt-4 ml-4 mr-4">
+            <div className="pt-4 pl-4 pr-4 w-full flex justify-between">
                 <Link href="/dashboard" className="text-gray-500" title="Back">&lt; Back</Link>
+                <DeleteButton id={capsule.id} />
             </div>
             <div className="p-8 pt-4">
                 <h1 className="text-3xl font-bold">{capsule.name}</h1>
@@ -45,7 +48,7 @@ export default async function CapsulePage({ params }: { params: { id: string } }
                         ))}
                     </ul>
                 ) : (
-                    <p className="text-red-600">Unlock Date: {capsule.unlockDate.toLocaleString({
+                    <p className="text-red-600"><ClockIcon className="w-6 h-6 inline" /> Unlock Date: {capsule.unlockDate.toLocaleString({
                         weekday: 'long',
                         year: 'numeric',
                         month: 'long',

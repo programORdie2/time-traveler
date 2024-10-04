@@ -1,6 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 
-const userSchema = new mongoose.Schema({
+interface IUser extends Document {
+    email: string;
+    password: string;
+}
+
+const userSchema: Schema<IUser> = new mongoose.Schema({
     email: {
         type: String,
         required: true,

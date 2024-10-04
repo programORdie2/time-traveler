@@ -1,26 +1,55 @@
 "use client";
 
-import { uploadFiles } from "@/actions/upload";
-import SubmitButton from "./submit-button";
-import { InputLabel } from "./ui/input-label";
 import { useFormState } from "react-dom";
+import { uploadFiles } from "@/actions/upload";
 
-export default async function UploadForm() {
+import SubmitButton from "@/components/submit-button";
+import { InputLabel } from "@/components/ui/input-label";
+import { Button } from "@/components/ui/button";
+import { DatetimePicker } from "@/components/datetime-picker";
+import { Label } from "@/components/ui/label";
+
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+
+export default function UploadForm() {
     const [state, action] = useFormState(uploadFiles, { success: true, message: "" });
+
     return (
-        <form action={action}>
-            <InputLabel title="Name" placeholder="Birthday pictures" id="name" name="name" required />
-            <InputLabel title="Description" placeholder="A collection of birthday pictures" id="description" name="description" required />
-            <InputLabel title="Files" type="file" multiple name="file" required id="file" accept="image/*,video/*,audio/*" />
+        <Dialog>
+            <DialogTrigger asChild>
+                <Button variant="secondary">+ New</Button>
+            </DialogTrigger>
 
-            <div className="mb-4">
-                <label htmlFor="unlockDate">Unlock Date</label><br />
-                <input type="datetime-local" name="unlockDate" id="unlockDate" required />
-            </div>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Upload New Time Capsule</DialogTitle>
+                    <DialogDescription>
+                        Upload a new time capsule to your account.
+                    </DialogDescription>
+                </DialogHeader>
 
-            {state.message && <p className={state.success ? "text-green-600" : "text-red-600"}>{state.message}</p>}
+                <form action={action}>
+                    <InputLabel title="Name" placeholder="Birthday pictures" id="name" name="name" required />
+                    <InputLabel title="Description" placeholder="A collection of birthday pictures" id="description" name="description" required />
+                    <InputLabel title="Files" type="file" multiple name="file" required id="file" accept="image/*,video/*,audio/*" />
 
-            <SubmitButton text="Upload" loadingText="Uploading..." />
-        </form>
+                    <div className="mb-4">
+                        <Label>Unlock Date</Label><br />
+                        <DatetimePicker />
+                    </div>
+
+                    {state && state.message && <p className={state.success ? "text-green-600" : "text-red-600"}>{state.message}</p>}
+
+                    <SubmitButton text="Upload" loadingText="Uploading..." />
+                </form>
+            </DialogContent>
+        </Dialog>
     )
 }

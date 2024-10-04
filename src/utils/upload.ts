@@ -42,11 +42,7 @@ export async function getFiles(cids: string[]) {
       const result = await pinata.gateways.createSignedURL({
         cid,
         expires: 60
-      }).optimizeImage({
-        width: 400,
-        height: 400,
-        format: "webp"
-      })
+      });
 
       urls[cid] = result
     })

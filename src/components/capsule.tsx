@@ -7,10 +7,11 @@ import {
     CardDescription,
     CardHeader
 } from "./ui/card";
+import { ClockIcon } from "@radix-ui/react-icons";
 
 export default function Capsule({ data }: { data: { id: string, name: string, description: string, ownerEmail: string, files: { name: string, type: string, cid: string, id: string }[], unlockDate: Date } }) {
-    const unclockDateLocal = new Date(data.unlockDate);
-    const isUnlocked = Date.now() > unclockDateLocal.getTime();
+    const unlockDateLocal = new Date(data.unlockDate);
+    const isUnlocked = Date.now() > unlockDateLocal.getTime();
 
     return (
         <Card>
@@ -26,7 +27,7 @@ export default function Capsule({ data }: { data: { id: string, name: string, de
                     <Button variant="outline"><Link href={`/capsule/${data.id}`}>Open</Link></Button>
                 ) : (
                     <div>
-                        <p className="text-red-600">Unlock Date: {data.unlockDate.toLocaleString()}</p>
+                        <p className="text-red-600"><ClockIcon className="w-6 h-6 inline" /> Unlocks at: {data.unlockDate.toLocaleString()}</p>
                     </div>
                 )}
             </CardContent>

@@ -1,5 +1,5 @@
 import Capsule from "@/models/capsule";
-import { deleteFiles } from "./upload";
+import { deleteFiles } from "../utils/upload";
 
 export const getAllCapsules = async (ownerEmail: string) => {
     return await Capsule.find({ ownerEmail });
@@ -33,5 +33,5 @@ export const deleteCapsule = async (id: string, ownerEmail: string) => {
     const pinataIds = capsule.files.map((file: { id: string }) => file.id);
     deleteFiles(pinataIds);
 
-    capsule.delete();
+    await Capsule.deleteOne({ id, ownerEmail });
 }

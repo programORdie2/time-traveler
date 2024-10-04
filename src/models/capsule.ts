@@ -1,6 +1,22 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 
-const fileSchema = new mongoose.Schema({
+interface IFile extends Document {
+    name: string;
+    type: string;
+    cid: string;
+    id: string;
+}
+
+interface ICapsule extends Document {
+    id: string;
+    name: string;
+    description: string;
+    ownerEmail: string;
+    files: IFile[];
+    unlockDate: Date;
+}
+
+const fileSchema: Schema<IFile> = new mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -19,7 +35,7 @@ const fileSchema = new mongoose.Schema({
     }
 })
 
-const capsuleSchema = new mongoose.Schema({
+const capsuleSchema: Schema<ICapsule> = new mongoose.Schema({
     id: {
         type: String,
         required: true

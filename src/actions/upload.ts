@@ -1,8 +1,20 @@
 "use server";
 
 import { auth } from "@/auth";
-import { createCapsule } from "@/utils/capsule";
+import { createCapsule } from "@/lib/capsule";
 import { uploadFiles as _uploadFiles, deleteFiles as _deleteFiles } from "@/utils/upload";
+import { redirect } from "next/navigation";
+
+const SUPPORTED_MIMES = [
+    "image/jpeg",
+    "image/png",
+    "image/gif",
+    "image/webp",
+    "video/mp4",
+    "audio/mpeg",
+    "audio/ogg",
+    "audio/wav",
+]
 
 export async function uploadFiles(prevState: any, formData: FormData) {
     const user = await auth();
@@ -19,7 +31,7 @@ export async function uploadFiles(prevState: any, formData: FormData) {
         return { success: false, message: "File size exceeds 10MB" };
     }
 
-    if (files.some((file) => file.type.startsWith("image/") === false && file.type.startsWith("video/") === false && file.type.startsWith("audio/") === false)) {
+    if (files.some((file) => !SUPPORTED_MIMES.includes(file.type))) {
         return { success: false, message: "Unsupported file type" };
     }
 
@@ -40,9 +52,14 @@ export async function uploadFiles(prevState: any, formData: FormData) {
 
 
     const uploadedFiles = await _uploadFiles(files);
+    let isSuccess = false;
+    let id;
     try {
         const result = await createCapsule(user.user.email!, name, description, uploadedFiles, unlockDate);
-        return { success: true, message: "Capsule created successfully", id: result.id };
+        isSuccess = true;
+        id = result.id;
+
+        return { success: true, message: "Capsule created successfully, redirecting...", id: result.id };
     } catch (error) {
         const fileIds = uploadedFiles.map((file) => file.id);
         _deleteFiles(fileIds);
@@ -50,5 +67,9 @@ export async function uploadFiles(prevState: any, formData: FormData) {
         console.error(error);
 
         return { success: false, message: "Failed to create capsule" };
+    } finally {
+        if (isSuccess) {
+            redirect(`/capsule/${id}`);
+        }
     }
 }

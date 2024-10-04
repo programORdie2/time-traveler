@@ -28,7 +28,7 @@ export default async function RootLayout({
           enableSystem={true}
           disableTransitionOnChange={false}
         >
-          <NextTopLoader />
+          <NextTopLoader showSpinner={false} />
           <Navbar user={user} />
           {children}
         </ThemeProvider>
