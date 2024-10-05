@@ -7,6 +7,8 @@ import { FilePreview } from "@/components/file-card";
 import { DeleteButton } from "@/components/delete-button";
 import Link from "next/link";
 import { ClockIcon } from "@radix-ui/react-icons";
+import prettyTimeLeft from "@/utils/prettyTime";
+import FileWrapper from "./files-wrapper";
 
 export default async function CapsulePage({ params }: { params: { id: string } }) {
     const user = await auth();
@@ -40,20 +42,17 @@ export default async function CapsulePage({ params }: { params: { id: string } }
                 <span className="text-gray-600 mb-1">{`${capsule.files.length} ${capsule.files.length === 1 ? 'file' : 'files'}`}</span>
 
                 {isUnlocked ? (
-                    <ul className="flex flex-col gap-4 items-center w-full">
-                        {capsule.files.map((file: { name: string, type: string, cid: string, id: string }) => (
-                            <li key={file.id} className="col-span-1 w-1/2 min-w-52 max-w-96">
-                                <FilePreview name={file.name} type={file.type} url={fileUrls[file.cid]} />
-                            </li>
-                        ))}
-                    </ul>
+                    <FileWrapper>
+                        <ul className="flex flex-col gap-4 items-center w-full">
+                            {capsule.files.map((file: { name: string, type: string, cid: string, id: string }) => (
+                                <li key={file.id} className="col-span-1 w-1/2 min-w-52 max-w-96">
+                                    <FilePreview name={file.name} type={file.type} url={fileUrls[file.cid]} />
+                                </li>
+                            ))}
+                        </ul>
+                    </FileWrapper>
                 ) : (
-                    <p className="text-red-600"><ClockIcon className="w-6 h-6 inline" /> Unlock Date: {capsule.unlockDate.toLocaleString({
-                        weekday: 'long',
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                    })}</p>
+                    <p className="text-red-600"><ClockIcon className="w-6 h-6 inline" /> Unlocks in {prettyTimeLeft(unclockDateLocal)}</p>
                 )}
             </div>
         </div>

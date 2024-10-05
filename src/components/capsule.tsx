@@ -8,13 +8,14 @@ import {
     CardHeader
 } from "./ui/card";
 import { ClockIcon } from "@radix-ui/react-icons";
+import prettyTimeLeft from "@/utils/prettyTime";
 
 export default function Capsule({ data }: { data: { id: string, name: string, description: string, ownerEmail: string, files: { name: string, type: string, cid: string, id: string }[], unlockDate: Date } }) {
     const unlockDateLocal = new Date(data.unlockDate);
     const isUnlocked = Date.now() > unlockDateLocal.getTime();
 
-    return (
-        <Card>
+    const inner = (
+        <Card className="h-full">
             <CardHeader>
                 <CardTitle>{data.name}</CardTitle>
                 <CardDescription>{data.description}</CardDescription>
@@ -27,10 +28,19 @@ export default function Capsule({ data }: { data: { id: string, name: string, de
                     <Button variant="outline"><Link href={`/capsule/${data.id}`}>Open</Link></Button>
                 ) : (
                     <div>
-                        <p className="text-red-600"><ClockIcon className="w-6 h-6 inline" /> Unlocks at: {data.unlockDate.toLocaleString()}</p>
+                        <p className="text-red-600"><ClockIcon className="w-6 h-6 inline" /> Unlocks in {prettyTimeLeft(unlockDateLocal)}</p>
                     </div>
                 )}
             </CardContent>
         </Card>
     )
+
+    if (!isUnlocked) {
+        return (
+            <Link href={`/capsule/${data.id}`}>
+                {inner}
+            </Link>
+        )
+    }
+    return inner
 }
