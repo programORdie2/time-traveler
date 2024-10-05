@@ -28,8 +28,8 @@ export default async function CapsulePage({ params }: { params: { id: string } }
             </div>
         )
     }
-    const unclockDateLocal = new Date(capsule.unlockDate);
-    const isUnlocked = Date.now() > unclockDateLocal.getTime();
+    const unlockDateLocal = new Date(capsule.unlockDate);
+    const isUnlocked = Date.now() > unlockDateLocal.getTime();
 
     const fileUrls = !isUnlocked ? {} : await getFiles(capsule.files.map((file: { cid: string }) => file.cid));
 
@@ -57,7 +57,7 @@ export default async function CapsulePage({ params }: { params: { id: string } }
                         </ul>
                     </FileWrapper>
                 ) : (
-                    <p className="text-red-600 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"><ClockIcon className="w-6 h-6 inline" /> Unlocks in {prettyTimeLeft(unclockDateLocal)}</p>
+                    <p className="text-red-600 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"><ClockIcon className="w-6 h-6 inline" /> Unlocks in {prettyTimeLeft(unlockDateLocal)}</p>
                 )}
             </div>
         </div>
