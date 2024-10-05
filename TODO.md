@@ -1,4 +1,4 @@
-- [ ] Better login page
-- [ ] Better error page
+- [x] Better login page
+- [x] Better error page
 - [ ] Time left countdown (like X days left too ...)
 - [ ] Push notifications

@@ -17,6 +17,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             },
             authorize: async (credentials: any) => {
                 let email, password;
+
                 try {
                     const { email: _email, password: _password } = await signInSchema.parseAsync(credentials);
                     email = _email;
