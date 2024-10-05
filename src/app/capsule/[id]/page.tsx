@@ -3,11 +3,14 @@ import { auth } from "@/auth";
 
 import { getCapsule } from "@/lib/capsule";
 import { getFiles } from "@/utils/upload";
+import prettyTimeLeft from "@/utils/prettyTime";
+
 import { FilePreview } from "@/components/file-card";
 import { DeleteButton } from "@/components/delete-button";
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
+
 import { ClockIcon } from "@radix-ui/react-icons";
-import prettyTimeLeft from "@/utils/prettyTime";
+import Link from "next/link";
 import FileWrapper from "./files-wrapper";
 
 export default async function CapsulePage({ params }: { params: { id: string } }) {
@@ -33,13 +36,15 @@ export default async function CapsulePage({ params }: { params: { id: string } }
     return (
         <div className="w-full h-full">
             <div className="pt-4 pl-4 pr-4 w-full flex justify-between">
-                <Link href="/dashboard" className="text-gray-500" title="Back">&lt; Back</Link>
+                <Button variant="ghost"><Link href="/dashboard" className="text-gray-500" title="Back">&lt; Back</Link></Button>
                 <DeleteButton id={capsule.id} />
             </div>
             <div className="p-8 pt-4">
                 <h1 className="text-3xl font-bold">{capsule.name}</h1>
                 <p className="text-xl mb-0">{capsule.description}</p>
-                <span className="text-gray-600 mb-1">{`${capsule.files.length} ${capsule.files.length === 1 ? 'file' : 'files'}`}</span>
+                <span className="text-gray-600">{`${capsule.files.length} ${capsule.files.length === 1 ? 'file' : 'files'}`}</span>
+                <br />
+                <span className="text-gray-600 mb-4">Created {capsule.createdAt.toLocaleDateString()}</span>
 
                 {isUnlocked ? (
                     <FileWrapper>
@@ -52,7 +57,7 @@ export default async function CapsulePage({ params }: { params: { id: string } }
                         </ul>
                     </FileWrapper>
                 ) : (
-                    <p className="text-red-600"><ClockIcon className="w-6 h-6 inline" /> Unlocks in {prettyTimeLeft(unclockDateLocal)}</p>
+                    <p className="text-red-600 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"><ClockIcon className="w-6 h-6 inline" /> Unlocks in {prettyTimeLeft(unclockDateLocal)}</p>
                 )}
             </div>
         </div>

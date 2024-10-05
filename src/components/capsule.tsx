@@ -1,26 +1,28 @@
+import prettyTimeLeft from "@/utils/prettyTime";
+
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { ClockIcon } from "@radix-ui/react-icons";
+
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
     CardTitle,
     CardDescription,
     CardHeader
-} from "./ui/card";
-import { ClockIcon } from "@radix-ui/react-icons";
-import prettyTimeLeft from "@/utils/prettyTime";
+} from "@/components/ui/card";
 
-export default function Capsule({ data }: { data: { id: string, name: string, description: string, ownerEmail: string, files: { name: string, type: string, cid: string, id: string }[], unlockDate: Date } }) {
+export default function Capsule({ data }: { data: { id: string, name: string, description: string, ownerEmail: string, files: { name: string, type: string, cid: string, id: string }[], unlockDate: Date, createdAt: Date } }) {
     const unlockDateLocal = new Date(data.unlockDate);
     const isUnlocked = Date.now() > unlockDateLocal.getTime();
 
     const inner = (
         <Card className="h-full">
             <CardHeader>
-                <CardTitle>{data.name}</CardTitle>
-                <CardDescription>{data.description}</CardDescription>
-
-                <span className="text-gray-600 mb-1">{`${data.files.length} ${data.files.length === 1 ? 'file' : 'files'}`}</span>
+                <CardTitle className="text-xl">{data.name}</CardTitle>
+                <CardDescription className="text-base">{data.description}</CardDescription>
+                <span className="text-sm text-gray-600">Created {data.createdAt.toLocaleDateString()}</span>
+                <span className="text-sm text-gray-600">{`${data.files.length} ${data.files.length === 1 ? 'file' : 'files'}`}</span>
             </CardHeader>
 
             <CardContent>

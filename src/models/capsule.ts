@@ -14,6 +14,7 @@ interface ICapsule extends Document {
     ownerEmail: string;
     files: IFile[];
     unlockDate: Date;
+    createdAt: Date;
 }
 
 const fileSchema: Schema<IFile> = new mongoose.Schema({
@@ -56,6 +57,10 @@ const capsuleSchema: Schema<ICapsule> = new mongoose.Schema({
     unlockDate: {
         type: Date,
         required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 });
 

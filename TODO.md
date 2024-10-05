@@ -1,5 +1,4 @@
 - [x] Better login page
 - [x] Better error page
 - [x] Time left countdown (like X days left too ...)
-- [ ] Suspense files and capsules?
 - [ ] Push notifications

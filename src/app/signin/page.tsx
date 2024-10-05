@@ -1,10 +1,9 @@
 "use client"
 
-import { InputLabel } from "@/components/ui/input-label"
-import { Button } from "@/components/ui/button"
-
 import { useFormState } from "react-dom"
 import { login } from "@/actions/login"
+
+import { InputLabel } from "@/components/ui/input-label"
 import SubmitButton from "@/components/submit-button"
 
 export default async function SignInPage(props: {
