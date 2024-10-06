@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Time Traveler
 
-## Getting Started
+**Time Traveler** is a web application that allows users to create digital time capsules, enabling them to upload various types of files—images, documents, videos—and unlock them at a specified future date. This project integrates Pinata’s Files API to facilitate secure file uploads and storage on the IPFS network.
 
-First, run the development server:
+## Table of Contents
+- [Time Traveler](#time-traveler)
+  - [Table of Contents](#table-of-contents)
+  - [Key Features](#key-features)
+  - [Technology Used](#technology-used)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [License](#license)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Key Features
+- **Multi-file Upload**: Upload multiple file types into a single time capsule.
+- **Custom Unlock Dates**: Set a designated unlock date for future access.
+- **Intuitive Dashboard**: A user-friendly interface to manage and create time capsules.
+- **Responsive Design**: Fully functional on both mobile and desktop devices.
+- **User Authentication**: Secure login system ensuring privacy and control over user capsules.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technology Used
+- **Next.js**: Full-stack framework for server-side rendering and API routes.
+- **Pinata**: Decentralized file storage using the Pinata Files API and IPFS.
+- **MongoDB**: Database for storing user data and metadata related to time capsules.
+- **Tailwind CSS**: Utility-first CSS framework for responsive design.
+- **shadcn**: UI component library for enhanced user experience.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation
+To run this project locally, follow these steps:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/programORdie2/time-traveler.git
+   ```
 
-## Learn More
+2. Navigate to the project directory:
+   ```bash
+   cd time-traveler
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Set up environment variables:
+   - Rename the `.env.local.sample` to `.env.local` and fill it out with your data.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-## Deploy on Vercel
+6. Open your browser and go to `http://localhost:3000` to view the application.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Usage
+- Sign up or log in to your account.
+- Create a new time capsule by uploading your files and setting an unlock date.
+- View your time capsules on the dashboard.
+- Files will be accessible after the specified unlock date.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
