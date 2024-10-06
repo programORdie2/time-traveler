@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 
-import UploadForm from "@/components/uploadForm";
+import UploadForm from "@/components/upload-form";
 import Capsules from "./capsules";
 
 export default async function Dashboard() {
