@@ -8,7 +8,7 @@ import {
 import { File } from "./file"
 
 
-export const FilePreview = ({ name, type, url }: { name: string, type: string, url: string }) => {
+export const FilePreview = ({ name, type, url, blurred }: { name: string, type: string, url: string, blurred: string }) => {
     return (
         <Card className="w-full">
             <CardHeader>
@@ -17,7 +17,7 @@ export const FilePreview = ({ name, type, url }: { name: string, type: string, u
             </CardHeader>
 
             <CardContent>
-                <File type={type} url={url} />
+                <File type={type} url={url} blurred={blurred} />
             </CardContent>
         </Card>
     )

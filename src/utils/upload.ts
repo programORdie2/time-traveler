@@ -1,6 +1,7 @@
 "server only"
 
 import { PinataSDK } from "pinata"
+import { blurFile } from "./imgBlur";
 
 if (!process.env.PINATA_JWT || !process.env.NEXT_PUBLIC_GATEWAY_URL) {
   throw new Error("Missing env variables")
@@ -12,17 +13,19 @@ const pinata = new PinataSDK({
 });
 
 export async function uploadFiles(files: File[]) {
-  const data: { name: string, type: string, cid: string, id: string }[] = [];
+  const data: { name: string, type: string, cid: string, id: string, blurred: string }[] = [];
 
   await Promise.all(
     files.map(async (file) => {
       const result = await pinata.upload.file(file);
+      const blurred = await blurFile(file);
 
       data.push({
         name: file.name,
         type: file.type,
         cid: result.cid,
-        id: result.id
+        id: result.id,
+        blurred: blurred
       });
     })
   )

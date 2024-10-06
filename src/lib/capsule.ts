@@ -11,15 +11,25 @@ export const getCapsule = async (id: string, ownerEmail: string) => {
     return await Capsule.findOne({ id, ownerEmail });
 }
 
-export const createCapsule = async (ownerEmail: string, name: string, description: string, uploadedFiles: { name: string, type: string, cid: string, id: string }[], unlockDate: Date) => {
+export const createCapsule = async (ownerEmail: string, name: string, description: string, uploadedFiles: { name: string, type: string, cid: string, id: string, blurred: string }[], unlockDate: Date) => {
     const id = Date.now().toString();
+
+    const files = uploadedFiles.map((file: { name: string, type: string, cid: string, id: string, blurred: string }) => {
+        return {
+            name: file.name,
+            type: file.type,
+            cid: file.cid,
+            id: file.id,
+            blurred: file.blurred
+        }
+    })
 
     const data = {
         id,
         name,
         description,
         ownerEmail,
-        files: uploadedFiles,
+        files: files,
         unlockDate
     }
 

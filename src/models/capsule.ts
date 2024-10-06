@@ -5,6 +5,7 @@ interface IFile extends Document {
     type: string;
     cid: string;
     id: string;
+    blurred: string;
 }
 
 interface ICapsule extends Document {
@@ -31,6 +32,10 @@ const fileSchema: Schema<IFile> = new mongoose.Schema({
         required: true
     },
     id: {
+        type: String,
+        required: true
+    },
+    blurred: {
         type: String,
         required: true
     }

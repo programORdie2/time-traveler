@@ -8,7 +8,6 @@ import { redirect } from "next/navigation";
 const SUPPORTED_MIMES = [
     "image/jpeg",
     "image/png",
-    "image/gif",
     "image/webp",
     "video/mp4",
     "audio/mpeg",
@@ -32,7 +31,7 @@ export async function uploadFiles(prevState: any, formData: FormData) {
     }
 
     if (files.some((file) => !SUPPORTED_MIMES.includes(file.type))) {
-        return { success: false, message: "Unsupported file type" };
+        return { success: false, message: "Unsupported file type, only image, audio and video files are supported." };
     }
 
     if (!name || !description || !files || files.length === 0 || !_unlockDate) {
