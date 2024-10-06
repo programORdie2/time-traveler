@@ -11,6 +11,10 @@ export const getCapsule = async (id: string, ownerEmail: string) => {
     return await Capsule.findOne({ id, ownerEmail });
 }
 
+export const countCapsules = async (ownerEmail: string) => {
+    return await Capsule.countDocuments({ ownerEmail });
+}
+
 export const createCapsule = async (ownerEmail: string, name: string, description: string, uploadedFiles: { name: string, type: string, cid: string, id: string, blurred: string }[], unlockDate: Date) => {
     const id = Date.now().toString();
 

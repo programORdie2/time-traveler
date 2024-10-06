@@ -1,7 +1,8 @@
 "use server";
 
 import { auth } from "@/auth";
-import { createCapsule } from "@/lib/capsule";
+import { MAX_FILE_SIZE, MAX_FILES_PER_MODULE } from "@/config";
+import { countCapsules, createCapsule } from "@/lib/capsule";
 import { uploadFiles as _uploadFiles, deleteFiles as _deleteFiles } from "@/utils/upload";
 import { redirect } from "next/navigation";
 
@@ -26,8 +27,16 @@ export async function uploadFiles(prevState: any, formData: FormData) {
     const description = formData.get("description") as string;
     const _unlockDate = formData.get("unlockDate") as string;
 
-    if (files.some((file) => file.size > 10 * 1024 * 1024)) {
-        return { success: false, message: "File size exceeds 10MB" };
+    if (await countCapsules(user.user.email!) >= 5) {
+        return { success: false, message: "Maximum number of capsules reached" };
+    }
+
+    if (files.length > MAX_FILES_PER_MODULE) {
+        return { success: false, message: `Too many files (max ${MAX_FILES_PER_MODULE})` };
+    }
+
+    if (files.some((file) => file.size > MAX_FILE_SIZE)) {
+        return { success: false, message: "File size exceeds 5MB" };
     }
 
     if (files.some((file) => !SUPPORTED_MIMES.includes(file.type))) {
