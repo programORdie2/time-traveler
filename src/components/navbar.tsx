@@ -15,8 +15,8 @@ export default async function Navbar({ user }: { user: any }) {
         <NavigationMenu className="w-full max-w-full">
             <NavigationMenuList className="w-lvw justify-between p-2 border-b border-b-stone-800">
                 <NavigationMenuItem>
-                    <NavigationMenuLink href="/dashboard" asChild>
-                        <Link href="/dashboard" title="Home">
+                    <NavigationMenuLink href="/" asChild>
+                        <Link href={user?.user ? "/dashboard" : "/"} title="Home">
                             <Button variant="ghost">Home</Button>
                         </Link>
                     </NavigationMenuLink>
