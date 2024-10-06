@@ -22,7 +22,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body>
+      <body className="w-screen h-screen">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -1,5 +1,5 @@
-import { FilePreview } from "@/components/file-card"
-import FileWrapper from "@/components/files-wrapper";
+import { FilePreview } from "@/components/files/file-card"
+import FileWrapper from "@/components/files/files-wrapper";
 
 export default function Files({ files, urls }: { files: { cid: string, name: string, type: string, id: string }[], urls: { [key: string]: string } }) {
     return (

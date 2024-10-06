@@ -2,4 +2,4 @@
 - [x] Better error page
 - [x] Time left countdown (like X days left too ...)
 - [ ] Push notifications
-- [ ] Landing page
+- [x] Landing page

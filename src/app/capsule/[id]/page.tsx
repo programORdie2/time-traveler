@@ -8,17 +8,49 @@ import prettyTimeLeft from "@/utils/prettyTime";
 import { DeleteButton } from "@/components/delete-button";
 import { Button } from "@/components/ui/button";
 
-import Files from "@/components/files";
+import Files from "@/components/files/files";
 import CapsuleMeta from "@/components/capsule-meta";
 
 import { ClockIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import type { Metadata } from "next";
 
-export default async function CapsulePage({ params }: { params: { id: string } }) {
+type props = {
+    params: {
+        id: string
+    }
+}
+
+export async function generateMetadata({ params }: props): Promise<Metadata> {
     const user = await auth();
-
     if (!user?.user) {
-        redirect("/signin");
+        return {
+            title: "Time Capsule not found",
+            description: "Time Capsule not found",
+            robots: { index: false, follow: false },
+        };
+    }
+
+    const capsule = await getCapsule(params.id, user?.user?.email!);
+    if (!capsule) {
+        return {
+            title: "Time Capsule not found",
+            description: "Time Capsule not found",
+            robots: { index: false, follow: false },
+        };
+    }
+
+    return {
+        title: `Time Capsule - ${capsule.title}`,
+        description: `Time Capsule - ${capsule.title}`,
+        robots: { index: false, follow: false },
+    };
+}
+
+export default async function CapsulePage({ params }: props) {
+    const user = await auth();
+    if (!user?.user) {
+        redirect("/");
     }
 
     const capsule = await getCapsule(params.id, user?.user?.email!);
@@ -29,6 +61,7 @@ export default async function CapsulePage({ params }: { params: { id: string } }
             </div>
         )
     }
+
     const unlockDateLocal = new Date(capsule.unlockDate);
     const isUnlocked = Date.now() > unlockDateLocal.getTime();
 
@@ -40,6 +73,7 @@ export default async function CapsulePage({ params }: { params: { id: string } }
                 <Button variant="ghost"><Link href="/dashboard" className="text-gray-500" title="Back">&lt; Back</Link></Button>
                 <DeleteButton id={capsule.id} />
             </div>
+
             <div className="p-8 pt-4">
                 <CapsuleMeta capsule={capsule} />
                 {isUnlocked ? (

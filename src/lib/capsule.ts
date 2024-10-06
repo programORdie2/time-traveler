@@ -1,9 +1,11 @@
+import { cache } from "react";
+
 import Capsule from "@/models/capsule";
 import { deleteFiles } from "../utils/upload";
 
-export const getAllCapsules = async (ownerEmail: string) => {
+export const getAllCapsules = cache(async (ownerEmail: string) => {
     return await Capsule.find({ ownerEmail });
-}
+})
 
 export const getCapsule = async (id: string, ownerEmail: string) => {
     return await Capsule.findOne({ id, ownerEmail });
