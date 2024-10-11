@@ -1,6 +1,6 @@
 # Time Traveler
 
-**Time Traveler** is a web application that allows users to create digital time capsules, enabling them to upload various types of files—images, documents, videos—and unlock them at a specified future date. This project integrates Pinata’s Files API to facilitate secure file uploads and storage on the IPFS network.
+**Time Traveler** is a web application that allows users to create digital time capsules, enabling them to upload various types of files—images, audio, videos—and unlock them at a specified future date. This project integrates Pinata’s Files API to facilitate secure file uploads and storage on the IPFS network.
 
 ## Table of Contents
 - [Time Traveler](#time-traveler)
@@ -23,7 +23,7 @@
 - **Pinata**: Decentralized file storage using the Pinata Files API and IPFS.
 - **MongoDB**: Database for storing user data and metadata related to time capsules.
 - **Tailwind CSS**: Utility-first CSS framework for responsive design.
-- **shadcn**: UI component library for enhanced user experience.
+- **ShadCN**: UI component library for enhanced user experience.
 
 ## Installation
 To run this project locally, follow these steps:
